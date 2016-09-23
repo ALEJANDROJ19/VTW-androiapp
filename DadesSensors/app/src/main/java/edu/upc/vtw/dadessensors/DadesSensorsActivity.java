@@ -15,10 +15,14 @@ import java.util.List;
 
 public class DadesSensorsActivity extends AppCompatActivity implements SensorEventListener {
 
+    //TODO: Modificar variables ja que no totes son necesaries en la app final, pude en un debug mode
     TextView logsensor, dadarebudaaccX,dadarebudaaccY,dadarebudaaccZ,dadarebudagirI,
             dadarebudagirJ,dadarebudagirK;
+    //
     SensorManager mSensorManager;
+    //TODO: Repasar els sensors que volem usar finalment en la nostre app acc+gyro?
     Sensor mSensorAcc,mSensorGyr;
+    //thread que controla l'enviament de dades
     Thread UdpThread;
 
     @Override
@@ -26,6 +30,10 @@ public class DadesSensorsActivity extends AppCompatActivity implements SensorEve
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dades_sensors);
 
+        //TODO: Revisar segons els sensors escollits
+        //TODO: Encapsular en metodes init() com hem vist a damo per portabilitat
+        //TODO: Modificar el codi per usar estaticament els sensors destitjats si es troben disponibles
+        // i no usar la list en el for.
 //        dadarebudaaccX = (TextView) findViewById(R.id.dadarebudaaccX);
 //        dadarebudaaccY = (TextView) findViewById(R.id.dadarebudaaccY);
 //        dadarebudaaccZ = (TextView) findViewById(R.id.dadarebudaaccZ);
@@ -58,7 +66,11 @@ public class DadesSensorsActivity extends AppCompatActivity implements SensorEve
         Runnable UdpRunnable = new UDPHandler(DadesSensorsActivity.this.getBaseContext());
         UdpThread = new Thread(UdpRunnable);
         UdpThread.start();
+
+        //TODO: Repasar el metode isAlive que no se que ace aqui
         UdpThread.isAlive();
+
+        //TODO: Borrar si no es necesari que no ho es; es debug
 //        Thread thread = new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -66,9 +78,10 @@ public class DadesSensorsActivity extends AppCompatActivity implements SensorEve
 //            }
 //        });
 //        thread.start();
+        //
 //
    }
-
+    //TODO: Metode inecesari millor tractar els sensors de forma estatica
     private void logsensors(String string) {
 
         logsensor.append(string + "\n");
@@ -79,6 +92,7 @@ public class DadesSensorsActivity extends AppCompatActivity implements SensorEve
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+        //TODO: Repasar el meyode dons hem de enviar el sensor escollit posteriorment
         if (event.accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
 //
 //            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -109,6 +123,7 @@ public class DadesSensorsActivity extends AppCompatActivity implements SensorEve
         //}
     }
 
+    //TODO: falta implementar el metode
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 

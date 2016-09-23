@@ -89,6 +89,7 @@ public class FullscreenActivity extends AppCompatActivity
         }
     };
     //rtsp streaming url
+    //TODO: dynamic url
     final static String RTSP_URL = "http://10.20.35.202:554";
     private MediaPlayer mMediaPlayer;
     private SurfaceHolder mSurfaceHolder;
@@ -197,7 +198,7 @@ public class FullscreenActivity extends AppCompatActivity
         try {
             // Specify the IP camera's URL and auth headers.
             mMediaPlayer.setDataSource(getApplicationContext(), Uri.parse(RTSP_URL));
-
+            //TODO: Tractar autentificació del servidor
             // Begin the process of setting up a video stream.
             mMediaPlayer.setOnPreparedListener(this);
             mMediaPlayer.prepareAsync();
