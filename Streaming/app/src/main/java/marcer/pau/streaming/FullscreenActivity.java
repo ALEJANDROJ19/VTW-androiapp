@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.TextView;
 
 
 public class FullscreenActivity extends AppCompatActivity
@@ -89,10 +88,11 @@ public class FullscreenActivity extends AppCompatActivity
         }
     };
     //rtsp streaming url
-    //TODO: dynamic url
     final static String RTSP_URL = "http://10.20.35.202:554";
     private MediaPlayer mMediaPlayer;
     private SurfaceHolder mSurfaceHolder;
+    //udp thread
+    Thread UdpThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +116,7 @@ public class FullscreenActivity extends AppCompatActivity
         mSurfaceHolder = surfaceView.getHolder();
         mSurfaceHolder.addCallback(this);
         mSurfaceHolder.setFixedSize(320, 240);
-
-
+        StartSensorData();
     }
 
     @Override
@@ -196,7 +195,7 @@ public class FullscreenActivity extends AppCompatActivity
         mMediaPlayer.setDisplay(mSurfaceHolder);
 
         try {
-            // Specify the IP camera's URL and auth headers.
+            // Specify the IP URL and auth headers.
             mMediaPlayer.setDataSource(getApplicationContext(), Uri.parse(RTSP_URL));
             //TODO: Tractar autentificació del servidor
             // Begin the process of setting up a video stream.
@@ -221,6 +220,12 @@ public class FullscreenActivity extends AppCompatActivity
     @Override
     public void onPrepared(MediaPlayer mp) {
         mMediaPlayer.start();
+    }
+
+    private void StartSensorData(){
+        Runnable UdpRunnable = new UDPHandler(getBaseContext());
+        UdpThread = new Thread(UdpRunnable);
+        UdpThread.start();
     }
 
 }

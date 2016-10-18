@@ -3,4 +3,12 @@
     <string name="No_sensor_data">No sensor data</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dadarebudaaccX"> Acc no rep X.</string>
+    <string name="dadarebudaaccY"> Acc no rep Y.</string>
+    <string name="dadarebudaaccZ"> Acc no rep Z.</string>
+    <string name="dadarebudagirI"> Gir no rep I.</string>
+    <string name="dadarebudagirJ"> Gir no rep J.</string>
+    <string name="dadarebudagirK"> Gir no rep K.</string>
+    <string name="logsensor"> Log de sensors...\n</string>
+    <string name="act_main_no_acuracy">no acuracy</string>
 </resources>
