@@ -88,7 +88,7 @@ public class FullscreenActivity extends AppCompatActivity
         }
     };
     //rtsp streaming url
-    final static String RTSP_URL = "http://10.20.35.202:554";
+    final static String RTSP_URL = "http://192.168.1.150:8090/test1.webm";
     private MediaPlayer mMediaPlayer;
     private SurfaceHolder mSurfaceHolder;
     //udp thread

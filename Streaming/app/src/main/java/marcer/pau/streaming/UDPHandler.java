@@ -31,7 +31,7 @@ public class UDPHandler implements Runnable {
     //udp data
     int DestPort;
     InetAddress Addr;
-    static String SERVERADRRESS = "192.168.0.195";
+    static String SERVERADRRESS = "192.168.1.150";
     DatagramSocket socket;
 
     public UDPHandler(Context mContext) {
@@ -99,7 +99,7 @@ public class UDPHandler implements Runnable {
     }
 
     private void initUDP() throws UnknownHostException, SocketException{
-        DestPort = 27015;
+        DestPort = 21210;
         Addr = InetAddress.getByName(SERVERADRRESS);
         socket = new DatagramSocket(8888);
     }
