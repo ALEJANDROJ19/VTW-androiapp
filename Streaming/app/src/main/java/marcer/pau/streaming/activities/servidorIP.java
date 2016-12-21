@@ -1,4 +1,4 @@
-package marcer.pau.streaming;
+package marcer.pau.streaming.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,14 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import marcer.pau.streaming.R;
+import marcer.pau.streaming.model.NetworkParameters;
 
 public class servidorIP extends AppCompatActivity {
-    private String ip;
-    private String port_stream;
-    private String port_udpserver;
-    private String port_tcpcontrol;
-
     private EditText input_ip, input_stream, input_udp, input_tcp;
     private TextView label_connected;
     private Boolean connected;
@@ -39,16 +35,15 @@ public class servidorIP extends AppCompatActivity {
         Button test_button = (Button) findViewById(R.id.button_test);
         label_connected = (TextView) findViewById(R.id.tv_conexio);
 
-
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Canviar tots els valors i retornar a la Activity Anterior
-                ip = input_ip.getText().toString();
-                port_stream = input_stream.getText().toString();
-                port_udpserver = input_udp.getText().toString();
-                port_tcpcontrol = input_tcp.getText().toString();
-                //TODO: notificar (?) || discovery + request apps?
+                NetworkParameters.getInstance().setIp(input_ip.getText().toString());
+                NetworkParameters.getInstance().setPort_stream(input_stream.getText().toString());
+                NetworkParameters.getInstance().setPort_udpserver(input_udp.getText().toString());
+                NetworkParameters.getInstance().setPort_tcpcontrol(input_tcp.getText().toString());
+                finish();
             }
         });
 
@@ -69,18 +64,4 @@ public class servidorIP extends AppCompatActivity {
         });
 
     }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public String getPort_stream() {
-        return port_stream;
-    }
-
-    public String getPort_udpserver() {
-        return port_udpserver;
-    }
-
-    public String getPort_tcpcontrol() { return port_tcpcontrol; }
 }

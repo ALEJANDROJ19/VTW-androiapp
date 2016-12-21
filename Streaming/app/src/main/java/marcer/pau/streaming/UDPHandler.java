@@ -17,6 +17,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import marcer.pau.streaming.model.NetworkParameters;
+
 //comments
 //actualment el gyro esta hardcoded ens falta una classe externa encarregada
 //de comprovar quin sensor vole usar i retornarlo per tal d'usarlo en aquesta classe
@@ -29,10 +31,10 @@ public class UDPHandler implements Runnable {
     Context mContext;
     HandlerThread mHandlerThread;
     //udp data
-    int DestPort;
-    InetAddress Addr;
-    static String SERVERADRRESS = "192.168.1.150";
-    DatagramSocket socket;
+    private int DestPort;
+    private InetAddress Addr;
+    //static String SERVERADRRESS = "192.168.1.150";
+    private DatagramSocket socket;
 
     public UDPHandler(Context mContext) {
         this.mContext = mContext;
@@ -99,8 +101,10 @@ public class UDPHandler implements Runnable {
     }
 
     private void initUDP() throws UnknownHostException, SocketException{
-        DestPort = 21210;
-        Addr = InetAddress.getByName(SERVERADRRESS);
+//        DestPort = 21210;
+        DestPort = Integer.valueOf(NetworkParameters.getInstance().getPort_udpserver());
+        //Addr = InetAddress.getByName(SERVERADRRESS);
+        Addr = InetAddress.getByName(NetworkParameters.getInstance().getIp());
         socket = new DatagramSocket(8888);
     }
 

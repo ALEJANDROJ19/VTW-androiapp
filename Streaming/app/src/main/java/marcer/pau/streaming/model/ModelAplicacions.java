@@ -1,9 +1,9 @@
-package marcer.pau.streaming;
-
-import android.media.Image;
+package marcer.pau.streaming.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import marcer.pau.streaming.model.Aplicacio;
 
 public class ModelAplicacions {
     private List<Aplicacio> listApps;

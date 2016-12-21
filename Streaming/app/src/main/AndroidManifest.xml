@@ -21,7 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".servidorIP"></activity>
+        <activity android:name=".activities.servidorIP"></activity>
     </application>
 
 </manifest>

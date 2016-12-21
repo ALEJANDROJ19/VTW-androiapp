@@ -12,6 +12,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import marcer.pau.streaming.model.NetworkParameters;
+
 
 public class FullscreenActivity extends AppCompatActivity
             implements MediaPlayer.OnPreparedListener, SurfaceHolder.Callback {
@@ -88,7 +90,8 @@ public class FullscreenActivity extends AppCompatActivity
         }
     };
     //rtsp streaming url
-    final static String RTSP_URL = "http://192.168.1.150:8090/test1.webm";
+    //final static String RTSP_URL = "http://192.168.1.150:8090/test1.webm";
+    final static String RTSP_URL = "http://"+NetworkParameters.getInstance().getIp()+":"+NetworkParameters.getInstance().getPort_stream()+"/test1.webm";
     private MediaPlayer mMediaPlayer;
     private SurfaceHolder mSurfaceHolder;
     //udp thread

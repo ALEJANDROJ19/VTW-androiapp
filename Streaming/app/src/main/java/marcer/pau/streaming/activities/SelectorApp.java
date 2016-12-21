@@ -1,15 +1,17 @@
-package marcer.pau.streaming;
+package marcer.pau.streaming.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import java.util.List;
+
+import marcer.pau.streaming.R;
+import marcer.pau.streaming.model.Aplicacio;
+import marcer.pau.streaming.model.ModelAplicacions;
 
 public class SelectorApp extends Activity implements ModelAplicacions.ModelAplicacionsListener{
     private ImageButton app1,app2,app3,app4,app5,app6,app7,app8,app9;
@@ -109,6 +111,7 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SelectorApp.this, servidorIP.class);
+//                startActivityForResult(intent,1);
                 startActivity(intent);
             }
         });
@@ -120,6 +123,15 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
     }
 
 //    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//
+//        } else {
+//        }
+//    }
+
+    //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.selector_app, menu);

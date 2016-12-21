@@ -1,14 +1,15 @@
-package marcer.pau.streaming;
+package marcer.pau.streaming.model;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 
 public class Aplicacio {
     private String name;
     private int identificador;
-    private Image imatge;
+    private Bitmap imatge;
 
-    public Aplicacio(String name, int identificador, Image imatge) {
+    public Aplicacio(String name, int identificador, Bitmap imatge) {
         this.name = name;
         this.identificador = identificador;
         this.imatge = imatge;
@@ -30,11 +31,11 @@ public class Aplicacio {
         this.identificador = identificador;
     }
 
-    public Image getImatge() {
+    public Bitmap getImatge() {
         return imatge;
     }
 
-    public void setImatge(Image imatge) {
+    public void setImatge(Bitmap imatge) {
         this.imatge = imatge;
     }
 }

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="marcer.pau.streaming.servidorIP"
+    tools:context="marcer.pau.streaming.activities.servidorIP"
     android:orientation="vertical">
 
     <TextView
@@ -96,7 +96,7 @@
             android:ems="10"
             android:id="@+id/inputTCPPort"
             android:layout_weight="1"
-            android:text="n/a"
+            android:text="21211"
             android:gravity="center_horizontal" />
     </LinearLayout>
 
