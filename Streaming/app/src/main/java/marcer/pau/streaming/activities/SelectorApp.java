@@ -7,15 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import marcer.pau.streaming.FullscreenActivity;
 import marcer.pau.streaming.R;
 import marcer.pau.streaming.model.Aplicacio;
 import marcer.pau.streaming.model.ModelAplicacions;
 
 public class SelectorApp extends Activity implements ModelAplicacions.ModelAplicacionsListener{
     private ImageButton app1,app2,app3,app4,app5,app6,app7,app8,app9;
-    private List<ImageButton> lapps;
+    private List<ImageButton> lapps = new LinkedList<>();
     private Button seleccionar_servidor;
     private ModelAplicacions model;
 
@@ -41,15 +43,15 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
     }
 
     private void init() {
-        app1 = (ImageButton) findViewById(R.id.imageButton1); lapps.add(1,app1);
-        app2 = (ImageButton) findViewById(R.id.imageButton2); lapps.add(2,app2);
-        app3 = (ImageButton) findViewById(R.id.imageButton3); lapps.add(3,app3);
-        app4 = (ImageButton) findViewById(R.id.imageButton4); lapps.add(4,app4);
-        app5 = (ImageButton) findViewById(R.id.imageButton5); lapps.add(5,app5);
-        app6 = (ImageButton) findViewById(R.id.imageButton6); lapps.add(6,app6);
-        app7 = (ImageButton) findViewById(R.id.imageButton7); lapps.add(7,app7);
-        app8 = (ImageButton) findViewById(R.id.imageButton8); lapps.add(8,app8);
-        app9 = (ImageButton) findViewById(R.id.imageButton9); lapps.add(9,app9);
+        app1 = (ImageButton) findViewById(R.id.imageButton1); lapps.add(app1);
+        app2 = (ImageButton) findViewById(R.id.imageButton2); lapps.add(app2);
+        app3 = (ImageButton) findViewById(R.id.imageButton3); lapps.add(app3);
+        app4 = (ImageButton) findViewById(R.id.imageButton4); lapps.add(app4);
+        app5 = (ImageButton) findViewById(R.id.imageButton5); lapps.add(app5);
+        app6 = (ImageButton) findViewById(R.id.imageButton6); lapps.add(app6);
+        app7 = (ImageButton) findViewById(R.id.imageButton7); lapps.add(app7);
+        app8 = (ImageButton) findViewById(R.id.imageButton8); lapps.add(app8);
+        app9 = (ImageButton) findViewById(R.id.imageButton9); lapps.add(app9);
 
         app1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +120,9 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
     }
 
     private void app_escollida(ImageButton view) {
-        Aplicacio app = model.getListApps().get(lapps.indexOf(view));
-        //TODO; Fer alguna cossa amb això
+        //Aplicacio app = model.getListApps().get(lapps.indexOf(view));
+        //TODO; Cridar al protocol
+        startActivity(new Intent(SelectorApp.this, FullscreenActivity.class));
     }
 
 //    @Override

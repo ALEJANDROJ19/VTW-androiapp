@@ -6,14 +6,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import marcer.pau.streaming.R;
+import marcer.pau.streaming.model.Aplicacio;
 import marcer.pau.streaming.model.NetworkParameters;
+import marcer.pau.streaming.protocol.JSONProtocol;
+import marcer.pau.streaming.protocol.TCPControl;
 
-public class servidorIP extends AppCompatActivity {
+public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONProtocolListener{
     private EditText input_ip, input_stream, input_udp, input_tcp;
     private TextView label_connected;
     private Boolean connected;
+    private static TCPControl tcpControl;
 
     private static final String LABEL_CONNECTED = "Conectat";
     private static final String LABEL_NOT_CONNECTED = "No conectat";
@@ -35,6 +42,8 @@ public class servidorIP extends AppCompatActivity {
         Button test_button = (Button) findViewById(R.id.button_test);
         label_connected = (TextView) findViewById(R.id.tv_conexio);
 
+        tcpControl = new TCPControl(this);
+
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,17 +60,46 @@ public class servidorIP extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: Test discovery and set if connected
-
-                //End
-                if(connected) {
-                    label_connected.setText(LABEL_CONNECTED);
-                    label_connected.setTextColor(getResources().getColor(R.color.green));
-                } else {
-                    label_connected.setText(LABEL_NOT_CONNECTED);
-                    label_connected.setTextColor(getResources().getColor(R.color.red));
-                }
+                tcpControl.doDiscovery();
+                changeConnectedState(false);
             }
         });
 
+    }
+
+    private void changeConnectedState(boolean connected) {
+        if(connected) {
+            label_connected.setText(LABEL_CONNECTED);
+            label_connected.setTextColor(getResources().getColor(R.color.green));
+        } else {
+            label_connected.setText(LABEL_NOT_CONNECTED);
+            label_connected.setTextColor(getResources().getColor(R.color.red));
+        }
+    }
+
+    @Override
+    public void onDiscoveryResponse(String ip, String port) {
+        Toast.makeText(this,"IP: "+ip+"\nPort: "+port,Toast.LENGTH_LONG).show();
+        changeConnectedState(true);
+    }
+
+    @Override
+    public void onAppRequestResponse(List<Aplicacio> listApps) {
+
+    }
+
+    @Override
+    public void onStartResponse(String ip, String port, String URI) {
+
+    }
+
+    @Override
+    public void onStopResponse() {
+
+    }
+
+    @Override
+    public void onErrorResponse() {
+        Toast.makeText(this,"ERROR Recived!",Toast.LENGTH_SHORT).show();
     }
 }
