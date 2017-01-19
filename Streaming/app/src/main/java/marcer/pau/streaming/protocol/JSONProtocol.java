@@ -35,6 +35,10 @@ public class JSONProtocol {
         void onErrorResponse();
     }
 
+    public void registerListener(JSONProtocolListener jsonProtocolListener) {
+        observador = jsonProtocolListener;
+    }
+
     /*
      * missatge inicial del mobil al broadcast de la subxarxa contra el port de control n
      */
@@ -194,7 +198,8 @@ public class JSONProtocol {
 
             if (!resposta.isNull("RESPONSE"))
                 switch (resposta.getString("RESPONSE")) {
-                    case "DISCOVERY":
+                    //case "DISCOVERY":
+                    case "OK":
                         observador.onDiscoveryResponse(control.getJSONObject(1).getString("IP"),control.getJSONObject(2).getString("PORT"));
                         break;
                     case "APP-LIST":

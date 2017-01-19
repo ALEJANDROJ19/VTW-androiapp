@@ -71,8 +71,8 @@ public class TCPControl {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.d("TAG", error.toString());
-                                Log.d("TAG", error.getLocalizedMessage());
+                                Log.d("TAG", ""+error.toString());
+                                Log.d("TAG", ""+error.getLocalizedMessage());
                             }
                         }
                 ) {

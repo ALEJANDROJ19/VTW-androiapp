@@ -52,6 +52,8 @@ public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONPr
                 NetworkParameters.getInstance().setPort_stream(input_stream.getText().toString());
                 NetworkParameters.getInstance().setPort_udpserver(input_udp.getText().toString());
                 NetworkParameters.getInstance().setPort_tcpcontrol(input_tcp.getText().toString());
+                //Get APP-LIST
+                tcpControl.doAppsRequest();
                 finish();
             }
         });
@@ -60,10 +62,17 @@ public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONPr
             @Override
             public void onClick(View view) {
                 //TODO: Test discovery and set if connected
+                NetworkParameters.getInstance().setIp(input_ip.getText().toString());
+                NetworkParameters.getInstance().setPort_stream(input_stream.getText().toString());
+                NetworkParameters.getInstance().setPort_udpserver(input_udp.getText().toString());
+                NetworkParameters.getInstance().setPort_tcpcontrol(input_tcp.getText().toString());
                 tcpControl.doDiscovery();
                 changeConnectedState(false);
             }
         });
+
+        //Enregistrar obs
+        JSONProtocol.getInstance().registerListener(this);
 
     }
 
