@@ -202,8 +202,8 @@ public class JSONProtocol {
                     case "OK":
                         observador.onDiscoveryResponse(control.getJSONObject(1).getString("IP"),control.getJSONObject(2).getString("PORT"));
                         break;
-                    case "APP-LIST":
-                        JSONArray array = control.getJSONObject(1).getJSONArray("APP-LIST");
+                    case "APP_LIST":
+                        JSONArray array = control.getJSONObject(1).getJSONArray("APP_LIST");
                         List<Aplicacio> aplicacioList = new LinkedList<>();
                         for(int i=0; i<array.length(); i+=2){
                             Aplicacio aplicacio = new Aplicacio("",array.getJSONObject(i).getInt("ID"),

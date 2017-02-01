@@ -232,4 +232,8 @@ public class FullscreenActivity extends AppCompatActivity
         UdpThread.start();
     }
 
+    private void StopSensorData(){
+
+    }
+
 }

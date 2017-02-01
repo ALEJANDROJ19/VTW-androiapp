@@ -6,20 +6,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import marcer.pau.streaming.FullscreenActivity;
 import marcer.pau.streaming.R;
+import marcer.pau.streaming.constants.Constants;
 import marcer.pau.streaming.model.Aplicacio;
 import marcer.pau.streaming.model.ModelAplicacions;
+import marcer.pau.streaming.protocol.JSONProtocol;
+import marcer.pau.streaming.protocol.TCPControl;
 
-public class SelectorApp extends Activity implements ModelAplicacions.ModelAplicacionsListener{
+public class SelectorApp extends Activity implements ModelAplicacions.ModelAplicacionsListener, JSONProtocol.JSONProtocolListener{
     private ImageButton app1,app2,app3,app4,app5,app6,app7,app8,app9;
     private List<ImageButton> lapps = new LinkedList<>();
     private Button seleccionar_servidor;
     private ModelAplicacions model;
+    private TCPControl tcpControl = new TCPControl(this);
 
     @Override
     public void onCanviModelAplicacions() {
@@ -53,60 +58,21 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
         app8 = (ImageButton) findViewById(R.id.imageButton8); lapps.add(app8);
         app9 = (ImageButton) findViewById(R.id.imageButton9); lapps.add(app9);
 
-        app1.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 app_escollida((ImageButton) view);
             }
-        });
-        app2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
-        app3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
-        app4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
-        app5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
-        app6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
-        app7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
-        app8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
-        app9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                app_escollida((ImageButton) view);
-            }
-        });
+        };
+        app1.setOnClickListener(onClickListener);
+        app2.setOnClickListener(onClickListener);
+        app3.setOnClickListener(onClickListener);
+        app4.setOnClickListener(onClickListener);
+        app5.setOnClickListener(onClickListener);
+        app6.setOnClickListener(onClickListener);
+        app7.setOnClickListener(onClickListener);
+        app8.setOnClickListener(onClickListener);
+        app9.setOnClickListener(onClickListener);
 
         seleccionar_servidor = (Button) findViewById(R.id.buttonConectar);
         seleccionar_servidor.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +80,7 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
             public void onClick(View view) {
                 Intent intent = new Intent(SelectorApp.this, servidorIP.class);
 //                startActivityForResult(intent,1);
-                startActivity(intent);
+                startActivityForResult(intent,Constants.REQUEST_SERVIDOR_IP);
             }
         });
     }
@@ -122,17 +88,52 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
     private void app_escollida(ImageButton view) {
         //Aplicacio app = model.getListApps().get(lapps.indexOf(view));
         //TODO; Cridar al protocol
+        tcpControl.doStartApp(new Aplicacio("APP",4,null),new LinkedList<String>());
         startActivity(new Intent(SelectorApp.this, FullscreenActivity.class));
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK) {
-//
-//        } else {
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST_SERVIDOR_IP){
+            onSelectorIPReturn();
+            if (resultCode == Constants.RETURN_CONNECTED) {
+                tcpControl.doAppsRequest();
+            } else if (resultCode == Constants.RETURN_NOCONNECTED){
+
+            }
+        }
+
+    }
+
+    private void onSelectorIPReturn() {
+        JSONProtocol.getInstance().registerListener(this);
+    }
+
+    @Override
+    public void onDiscoveryResponse(String ip, String port) {
+
+    }
+
+    @Override
+    public void onAppRequestResponse(List<Aplicacio> listApps) {
+
+    }
+
+    @Override
+    public void onStartResponse(String ip, String port, String URI) {
+        Toast.makeText(this,"IP: "+ip+"\nPort: "+port+"\nURI: "+URI,Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public void onStopResponse() {
+
+    }
+
+    @Override
+    public void onErrorResponse() {
+
+    }
 
     //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {

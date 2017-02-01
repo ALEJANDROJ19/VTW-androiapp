@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import marcer.pau.streaming.R;
+import marcer.pau.streaming.constants.Constants;
 import marcer.pau.streaming.model.Aplicacio;
 import marcer.pau.streaming.model.NetworkParameters;
 import marcer.pau.streaming.protocol.JSONProtocol;
@@ -19,7 +20,7 @@ import marcer.pau.streaming.protocol.TCPControl;
 public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONProtocolListener{
     private EditText input_ip, input_stream, input_udp, input_tcp;
     private TextView label_connected;
-    private Boolean connected;
+    private Boolean connected = false;
     private static TCPControl tcpControl;
 
     private static final String LABEL_CONNECTED = "Conectat";
@@ -52,8 +53,8 @@ public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONPr
                 NetworkParameters.getInstance().setPort_stream(input_stream.getText().toString());
                 NetworkParameters.getInstance().setPort_udpserver(input_udp.getText().toString());
                 NetworkParameters.getInstance().setPort_tcpcontrol(input_tcp.getText().toString());
-                //Get APP-LIST
-                tcpControl.doAppsRequest();
+                if(connected) setResult(Constants.RETURN_CONNECTED);
+                else setResult(Constants.RETURN_NOCONNECTED);
                 finish();
             }
         });
@@ -80,9 +81,11 @@ public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONPr
         if(connected) {
             label_connected.setText(LABEL_CONNECTED);
             label_connected.setTextColor(getResources().getColor(R.color.green));
+            this.connected = true;
         } else {
             label_connected.setText(LABEL_NOT_CONNECTED);
             label_connected.setTextColor(getResources().getColor(R.color.red));
+            this.connected = false;
         }
     }
 

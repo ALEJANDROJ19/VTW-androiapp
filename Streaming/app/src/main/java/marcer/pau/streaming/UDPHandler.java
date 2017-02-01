@@ -76,15 +76,14 @@ public class UDPHandler implements Runnable {
                         e.printStackTrace();
                     }
                     //debug logger
-                    Log.d("Message x",  Float.toString(event.values[0]));
-                    Log.d("Message y",  Float.toString(event.values[1]));
-                    Log.d("Message z",  Float.toString(event.values[2]));
+                    Log.d("UDPHandler", "Message x"+Float.toString(event.values[0])+
+                                        "Message y"+Float.toString(event.values[1])+
+                                        "Message z"+Float.toString(event.values[2]));
                 }
             }
 
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                //TODO: jesus vs marzelo who will win?
             }
         };
         //bind the sensors to the sensor listener and the new thread
@@ -106,6 +105,12 @@ public class UDPHandler implements Runnable {
         //Addr = InetAddress.getByName(SERVERADRRESS);
         Addr = InetAddress.getByName(NetworkParameters.getInstance().getIp());
         socket = new DatagramSocket(8888);
+    }
+
+    public void stopUDP() {
+        socket.close();
+        mSensorManager.unregisterListener(mListener);
+
     }
 
 //        @NonNull
