@@ -233,7 +233,7 @@ public class FullscreenActivity extends AppCompatActivity
     }
 
     private void StopSensorData(){
-
+        //aaaa
     }
 
 }
