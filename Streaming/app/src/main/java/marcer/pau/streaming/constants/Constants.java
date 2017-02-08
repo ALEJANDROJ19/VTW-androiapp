@@ -9,4 +9,5 @@ public class Constants {
     public static final int RETURN_NOCONNECTED = 2;
 
     public static final int REQUEST_SERVIDOR_IP = 1;
+    public static final int REQUEST_START = 2;
 }

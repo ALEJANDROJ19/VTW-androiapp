@@ -18,6 +18,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import marcer.pau.streaming.model.NetworkParameters;
+import marcer.pau.streaming.protocol.JSONProtocol;
 
 //comments
 //actualment el gyro esta hardcoded ens falta una classe externa encarregada
@@ -67,12 +68,13 @@ public class UDPHandler implements Runnable {
                     //create a new json object to put the sensor data
                     JSONObject data = new JSONObject();
                     try {
-                        data.put("x", event.values[0]);
-                        data.put("y", event.values[1]);
-                        data.put("z", event.values[2]);
+                        data = JSONProtocol.getGyroscopeMessage(event.values[0],event.values[1],event.values[2]);
+//                        data.put("x", event.values[0]);
+//                        data.put("y", event.values[1]);
+//                        data.put("z", event.values[2]);
                         //send the object via udp datagram
                         SendUDPDatagram(data);
-                    } catch (JSONException | IOException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     //debug logger

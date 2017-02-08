@@ -168,7 +168,7 @@ public class JSONProtocol {
     /*
      * Gyroscope packet schema
      */
-    public JSONObject getGyroscopeMessage(float x, float y, float z){
+    public static JSONObject getGyroscopeMessage(float x, float y, float z){
         JSONObject object = new JSONObject();
         try {
             object.put("VTWDATA",new JSONArray()

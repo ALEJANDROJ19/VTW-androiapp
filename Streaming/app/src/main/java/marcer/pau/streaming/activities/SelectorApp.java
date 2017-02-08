@@ -89,7 +89,7 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
         //Aplicacio app = model.getListApps().get(lapps.indexOf(view));
         //TODO; Cridar al protocol
         tcpControl.doStartApp(new Aplicacio("APP",4,null),new LinkedList<String>());
-        startActivity(new Intent(SelectorApp.this, FullscreenActivity.class));
+
     }
 
     @Override
@@ -103,7 +103,14 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
 
             }
         }
+        else if (requestCode == Constants.REQUEST_START){
+            onStreamingReturn();
+        }
 
+    }
+
+    private void onStreamingReturn() {
+        tcpControl.doStopApp(new Aplicacio("APP",4,null),new LinkedList<String>());
     }
 
     private void onSelectorIPReturn() {
@@ -123,11 +130,12 @@ public class SelectorApp extends Activity implements ModelAplicacions.ModelAplic
     @Override
     public void onStartResponse(String ip, String port, String URI) {
         Toast.makeText(this,"IP: "+ip+"\nPort: "+port+"\nURI: "+URI,Toast.LENGTH_LONG);
+        startActivityForResult(new Intent(SelectorApp.this, FullscreenActivity.class),Constants.REQUEST_START);
     }
 
     @Override
     public void onStopResponse() {
-
+        
     }
 
     @Override
