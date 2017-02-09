@@ -45,6 +45,8 @@ public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONPr
 
         tcpControl = new TCPControl(this);
 
+        populateFields();
+
         ok_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +64,6 @@ public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONPr
         test_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Test discovery and set if connected
                 NetworkParameters.getInstance().setIp(input_ip.getText().toString());
                 NetworkParameters.getInstance().setPort_stream(input_stream.getText().toString());
                 NetworkParameters.getInstance().setPort_udpserver(input_udp.getText().toString());
@@ -113,5 +114,12 @@ public class servidorIP extends AppCompatActivity implements JSONProtocol.JSONPr
     @Override
     public void onErrorResponse() {
         Toast.makeText(this,"ERROR Recived!",Toast.LENGTH_SHORT).show();
+    }
+
+    private void populateFields(){
+        input_ip.setText(NetworkParameters.getInstance().getIp());
+        input_stream.setText(NetworkParameters.getInstance().getPort_stream());
+        input_udp.setText(NetworkParameters.getInstance().getPort_udpserver());
+        input_tcp.setText(NetworkParameters.getInstance().getPort_tcpcontrol());
     }
 }

@@ -91,12 +91,14 @@ public class FullscreenActivity extends AppCompatActivity
     };
     //rtsp streaming url
     //final static String RTSP_URL = "http://192.168.1.150:8090/test1.webm";
-    final static String RTSP_URL = "http://"+NetworkParameters.getInstance().getIp()+":"+NetworkParameters.getInstance().getPort_stream()+"/test1.webm";
-    //final static String RTSP_URL = "http://"+NetworkParameters.getInstance().getIp()+":"+NetworkParameters.getInstance().getPort_stream()+"/test1.flv";
+    final static String RTSP_URL = "http://"+NetworkParameters.getInstance().getIp()+":"+NetworkParameters.getInstance().getPort_stream()+"/"+NetworkParameters.getInstance().getUri();
+    //final static String RTSP_URL = "rtsp://"+NetworkParameters.getInstance().getIp()+":8091"+"/"+NetworkParameters.getInstance().getUri();
+        //final static String RTSP_URL = "http://"+NetworkParameters.getInstance().getIp()+":"+NetworkParameters.getInstance().getPort_stream()+"/test1.flv";
     private MediaPlayer mMediaPlayer;
     private SurfaceHolder mSurfaceHolder;
     //udp thread
     Thread UdpThread;
+    Runnable UdpRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,13 +229,18 @@ public class FullscreenActivity extends AppCompatActivity
     }
 
     private void StartSensorData(){
-        Runnable UdpRunnable = new UDPHandler(getBaseContext());
+        UdpRunnable = new UDPHandler(getBaseContext());
         UdpThread = new Thread(UdpRunnable);
         UdpThread.start();
     }
 
-    private void StopSensorData(){
-        //aaaa
+    private void stopSensorData(){
+        ((UDPHandler)UdpRunnable).stopUDP();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopSensorData();
+    }
 }

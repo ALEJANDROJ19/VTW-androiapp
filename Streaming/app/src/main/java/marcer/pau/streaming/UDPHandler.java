@@ -112,7 +112,6 @@ public class UDPHandler implements Runnable {
     public void stopUDP() {
         socket.close();
         mSensorManager.unregisterListener(mListener);
-
     }
 
 //        @NonNull

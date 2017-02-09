@@ -9,6 +9,7 @@ public class NetworkParameters {
     private String port_stream;
     private String port_udpserver;
     private String port_tcpcontrol;
+    private String uri;
 
     private static NetworkParameters networkParameters;
     public static NetworkParameters getInstance() {
@@ -22,6 +23,7 @@ public class NetworkParameters {
         this.port_stream = "8090";
         this.port_udpserver = "21210";
         this.port_tcpcontrol = "21211";
+        this.uri = "test1.webm";
     }
 
     public String getIp() {
@@ -54,6 +56,14 @@ public class NetworkParameters {
 
     public void setPort_tcpcontrol(String port_tcpcontrol) {
         this.port_tcpcontrol = port_tcpcontrol;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     @Override

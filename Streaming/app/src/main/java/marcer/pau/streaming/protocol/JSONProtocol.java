@@ -1,6 +1,8 @@
 package marcer.pau.streaming.protocol;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -10,6 +12,7 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import marcer.pau.streaming.R;
 import marcer.pau.streaming.model.Aplicacio;
 
 
@@ -17,6 +20,7 @@ public class JSONProtocol {
 
     private static JSONProtocol singleton;
     private static JSONProtocolListener observador;
+    private static Context context;
 
     private JSONProtocol() {
 
@@ -37,6 +41,9 @@ public class JSONProtocol {
 
     public void registerListener(JSONProtocolListener jsonProtocolListener) {
         observador = jsonProtocolListener;
+    }
+    public void setContext(Context context){
+        this.context = context;
     }
 
     /*
@@ -206,8 +213,39 @@ public class JSONProtocol {
                         JSONArray array = control.getJSONObject(1).getJSONArray("APP_LIST");
                         List<Aplicacio> aplicacioList = new LinkedList<>();
                         for(int i=0; i<array.length(); i+=2){
-                            Aplicacio aplicacio = new Aplicacio("",array.getJSONObject(i).getInt("ID"),
-                                    (Bitmap) array.getJSONObject(i+1).get("THUMBNAIL"));
+                            Aplicacio aplicacio = null;
+                            try {
+                                aplicacio = new Aplicacio("",array.getJSONObject(i).getInt("ID"),
+                                        (Bitmap) array.getJSONObject(i+1).get("THUMBNAIL"));
+                            } catch (Exception e) {
+                                //e.printStackTrace();
+                            } finally {
+                                if(aplicacio == null){
+                                    Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_def);
+                                    switch (array.getJSONObject(i).getInt("ID")) {
+                                        case 1:
+                                            bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_1);
+                                            break;
+                                        case 2:
+                                            bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_2);
+                                            break;
+                                        case 3:
+                                            bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_3);
+                                            break;
+                                        case 4:
+                                            bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_4);
+                                            break;
+                                        case 5:
+                                            bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_5);
+                                            break;
+                                        case 6:
+                                            bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_6);
+                                            break;
+                                    }
+                                    aplicacio = new Aplicacio("", array.getJSONObject(i).getInt("ID"), bitmap);
+                                }
+                            }
+
                             aplicacioList.add(aplicacio);
                         }
                         observador.onAppRequestResponse(aplicacioList);
